@@ -6,10 +6,10 @@ public class GroupDeletionTests extends TestBase {
 
     @Test
     public void testGroupDeletion() {
-        wd.get("http://localhost/addressbook/group.php");
-        gotoGroupPage();
-        selectGroup();
-        deleteSelectedGroups();
-        returnToGroupPage();
+        app.wd.get("http://localhost/addressbook/group.php");
+        app.getNavigationHelper().gotoGroupPage();
+        app.getGroupHelper().selectGroup();
+        app.getGroupHelper().deleteSelectedGroups();
+        app.getGroupHelper().returnToGroupPage();
     }
 }
