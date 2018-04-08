@@ -24,6 +24,6 @@ public class Point {
     double getRadius() {
         Point a = new Point(0, 0);
         Point b = new Point(0, 0);
-        return this.getDistance(a,  b);
+        return this.getDistance(a, b);
     }
 }
