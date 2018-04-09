@@ -45,7 +45,7 @@ public class GroupHelper extends HelperBase {
     }
 
     public void createGroup(GroupData group) {
-       initGroupCreation();
+        initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
         returnToGroupPage();
@@ -53,5 +53,9 @@ public class GroupHelper extends HelperBase {
 
     public boolean isThereAGroup() {
         return isElemetPresent(By.name("selected[]"));
+    }
+
+    public int getGroupCount() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 }
