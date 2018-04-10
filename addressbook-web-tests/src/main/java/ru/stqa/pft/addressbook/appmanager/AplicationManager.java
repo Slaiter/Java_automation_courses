@@ -9,7 +9,6 @@ import org.openqa.selenium.remote.BrowserType;
 import java.util.concurrent.TimeUnit;
 
 public class AplicationManager {
-
     public WebDriver wd;
 
     private ContactHelper contactHelper;
