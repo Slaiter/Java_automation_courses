@@ -10,6 +10,8 @@ import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
+    private Groups groupCache = null;
+
     public GroupHelper(WebDriver wd) {
         super(wd);
     }
@@ -80,11 +82,9 @@ public class GroupHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    private Groups groupCache = null;
-
     public Groups all() {
         if (groupCache != null) {
-            return new Groups (groupCache);
+            return new Groups(groupCache);
         }
         groupCache = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
@@ -93,6 +93,6 @@ public class GroupHelper extends HelperBase {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             groupCache.add(new GroupData().withId(id).withName(name));
         }
-        return new Groups (groupCache);
+        return new Groups(groupCache);
     }
 }
