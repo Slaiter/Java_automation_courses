@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GroupDataGenerator {
 
-    @Parameter(names =  "-c", description = "Group count")
+    @Parameter(names = "-c", description = "Group count")
     public int count;
 
     @Parameter(names = "-f", description = "Target file")
@@ -33,11 +33,6 @@ public class GroupDataGenerator {
         generator.run();
     }
 
-    private void run() throws IOException {
-        List<GroupData> groups = generateGroups(count);
-        save(groups, new File(file));
-    }
-
     private static void save(List<GroupData> groups, File file) throws IOException {
         System.out.println(new File(".").getAbsolutePath());
         Writer writer = new FileWriter(file);
@@ -45,6 +40,11 @@ public class GroupDataGenerator {
             writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
         }
         writer.close();
+    }
+
+    private void run() throws IOException {
+        List<GroupData> groups = generateGroups(count);
+        save(groups, new File(file));
     }
 
     private List<GroupData> generateGroups(int count) {
