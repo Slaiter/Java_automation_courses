@@ -38,6 +38,15 @@ public class GroupDataGenerator {
         generator.run();
     }
 
+    private static void saveAsCsv(List<GroupData> groups, File file) throws IOException {
+        System.out.println(new File(".").getAbsolutePath());
+        try (Writer writer = new FileWriter(file)) {
+            for (GroupData group : groups) {
+                writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
+            }
+        }
+    }
+
     private void run() throws IOException {
         List<GroupData> groups = generateGroups(count);
         if (format.equals("csv")) {
@@ -66,15 +75,6 @@ public class GroupDataGenerator {
         String xml = xstream.toXML(groups);
         try (Writer writer = new FileWriter(file)) {
             writer.write(xml);
-        }
-    }
-
-    private static void saveAsCsv(List<GroupData> groups, File file) throws IOException {
-        System.out.println(new File(".").getAbsolutePath());
-        try (Writer writer = new FileWriter(file)) {
-            for (GroupData group : groups) {
-                writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
-            }
         }
     }
 

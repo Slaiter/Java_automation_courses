@@ -55,7 +55,7 @@ public class ContactCreationTests extends TestBase {
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) {
         Contacts before = app.contact().all();
-        File photo = new File("src/test/resources/stru.png");;
+        File photo = new File("src/test/resources/stru.png");
         app.contact().create(contact);
         Contacts after = app.contact().all();
         assertThat(after.size(), equalTo(before.size() + 1));
