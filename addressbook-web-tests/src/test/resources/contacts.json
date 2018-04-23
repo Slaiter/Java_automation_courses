@@ -2,22 +2,22 @@
   {
     "firstname": "Firstname 0",
     "lastname": "Lastname 0",
+    "group": "test 0",
     "allPhones": "",
-    "allEmails": "",
-    "group": "test 0"
+    "allEmails": ""
   },
   {
     "firstname": "Firstname 1",
     "lastname": "Lastname 1",
+    "group": "test 1",
     "allPhones": "",
-    "allEmails": "",
-    "group": "test 1"
+    "allEmails": ""
   },
   {
     "firstname": "Firstname 2",
     "lastname": "Lastname 2",
+    "group": "test 2",
     "allPhones": "",
-    "allEmails": "",
-    "group": "test 2"
+    "allEmails": ""
   }
 ]
