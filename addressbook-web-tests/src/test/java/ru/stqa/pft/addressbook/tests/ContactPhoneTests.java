@@ -21,7 +21,7 @@ public class ContactPhoneTests extends TestBase {
         if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData()
                     .withFirstname("smit").withLastname("grey").withHomePhone("111")
-                    .withMobilePhone("222").withWorkPhone("333").withEmail("mamba@mail.ru").withGroup("test1"));
+                    .withMobilePhone("222").withWorkPhone("333").withEmail("mamba@mail.ru").inGroup(app.db().groups().iterator().next()));
         }
     }
 

@@ -17,10 +17,17 @@ public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
+        Groups groups = app.db().groups();
+        if (groups.size() == 0) {
+            GroupData group = new GroupData().withName("new");
+            app.goTo().groupPage();
+            app.group().create(group);
+            groups = app.db().groups();
+        }
         if (app.db().contacts().size() == 0) {
             if (app.contact().all().size() == 0) {
                 app.contact().create(new ContactData().withFirstname("smit").withLastname("grey").withMobilePhone("89296173544")
-                        .withEmail("mamba@mail.ru").withGroup("test 1").withPhoto(new File("src/test/resources/stru.png")));
+                        .withEmail("mamba@mail.ru").withPhoto(new File("src/test/resources/stru.png")).inGroup(groups.iterator().next()));
             }
         }
     }
@@ -30,7 +37,7 @@ public class ContactModificationTests extends TestBase {
         Contacts before = app.db().contacts();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstname("smit").withLastname("grey")
-                .withMobilePhone("89296173544").withEmail("mamba@mail.ru").withGroup("test 1")
+                .withMobilePhone("89296173544").withEmail("mamba@mail.ru").inGroup(app.db().groups().iterator().next())
                 .withPhoto(new File("src/test/resources/stru.png"));
         app.contact().modify(contact);
         Contacts after = app.db().contacts();

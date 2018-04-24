@@ -73,7 +73,7 @@ public class ContactDataGenerator {
         Writer writer = new FileWriter(file);
         for (ContactData contact : contacts) {
             writer.write(String.format("%s;%s;%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(),
-                    contact.getAddress(), contact.getAllPhones(), contact.getAllEmails(), contact.getGroup()));
+                    contact.getAddress(), contact.getAllPhones(), contact.getAllEmails(), contact.getGroups().iterator().next().getName()));
         }
         writer.close();
     }
@@ -82,7 +82,7 @@ public class ContactDataGenerator {
         List<ContactData> contacts = new ArrayList<ContactData>();
         for (int i = 0; i < count; i++) {
             contacts.add(new ContactData().withFirstname(String.format("Firstname %s", i))
-                    .withLastname(String.format("Lastname %s", i)).withAddress(String.format("Address %s", i)).withAllPhones("").withAllEmails("").withGroup(String.format("test %s", i)));
+                    .withLastname(String.format("Lastname %s", i)).withAddress(String.format("Address %s", i)).withAllPhones("").withAllEmails(""));//inGroup("test"));
         }
         return contacts;
     }
