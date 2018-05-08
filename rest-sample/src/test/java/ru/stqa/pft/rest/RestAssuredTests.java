@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-public class RestAssuredTests {
+public class RestAssuredTests extends TestBase {
 
     @BeforeClass
     public void init() {
@@ -22,6 +22,7 @@ public class RestAssuredTests {
 
     @Test
     public void testCreateIssue() throws IOException {
+        skipIfNotFixed(getIssueStatus());
         Set<Issue> oldIssues = getIssues();
         Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
         int issueId = createIssue(newIssue);
@@ -34,7 +35,8 @@ public class RestAssuredTests {
         String json = RestAssured.get("http://demo.bugify.com/api/issues.json").asString();
         JsonElement parsed = new JsonParser().parse(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
-        return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {}.getType());
+        return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {
+        }.getType());
     }
 
     private int createIssue(Issue newIssue) throws IOException {
