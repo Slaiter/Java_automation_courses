@@ -33,9 +33,8 @@ public class TestBase {
         app.stop();
     }
 
-    private MantisConnectPortType getMantisConnectPortType() throws MalformedURLException, ServiceException {
-        return new MantisConnectLocator()
-                .getMantisConnectPort(new URL(app.getProperty("http://localhost/mantisbt-1.3.4/api/soap/mantisconnect.php")));
+    private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
+        return new MantisConnectLocator().getMantisConnectPort(new URL("http://localhost/mantisbt-1.3.4/api/soap/mantisconnect.php"));
     }
 
     public void skipIfNotFixed(int issueId) throws RemoteException, MalformedURLException, ServiceException {
@@ -45,12 +44,12 @@ public class TestBase {
     }
 
     private boolean isIssueOpen(int issueId) throws RemoteException, MalformedURLException, ServiceException {
-        MantisConnectPortType mc = getMantisConnectPortType();
+        MantisConnectPortType mc = getMantisConnect();
         IssueData issue = mc.mc_issue_get(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"), BigInteger.valueOf(issueId));
         if (issue.getStatus().toString() == "resolved") {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 }
