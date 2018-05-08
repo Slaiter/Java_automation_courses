@@ -29,6 +29,18 @@ public class JamesHelper {
         mailSession = Session.getDefaultInstance(System.getProperties());
     }
 
+    private static MailMessage toModelMail(Message m) {
+        try {
+            return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean doesUserExists(String name) {
         initTelnetSession();
         write("verify " + name);
@@ -36,7 +48,6 @@ public class JamesHelper {
         closeTelnetSession();
         return result.trim().equals("User " + name + " exist");
     }
-
 
     public void createUser(String name, String passwd) {
         initTelnetSession();
@@ -72,7 +83,7 @@ public class JamesHelper {
         write("");
 
         readUntil("Login id:");
-        write("");
+        write(login);
         readUntil("Password:");
         write(password);
 
@@ -156,17 +167,5 @@ public class JamesHelper {
             }
         }
         throw new Error("No mail");
-    }
-
-    private static MailMessage toModelMail(Message m) {
-        try {
-            return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

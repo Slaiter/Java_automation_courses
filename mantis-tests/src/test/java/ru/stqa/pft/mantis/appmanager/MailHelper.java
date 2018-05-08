@@ -11,12 +11,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MailHelper {
-    private ApplicationManager app;
     private final Wiser wiser;
+    private ApplicationManager app;
 
     public MailHelper(ApplicationManager app) {
         this.app = app;
         wiser = new Wiser();
+    }
+
+    public static MailMessage toModelMail(WiserMessage m) {
+        try {
+            MimeMessage mn = m.getMimeMessage();
+            return new MailMessage(mn.getAllRecipients()[0].toString(), (String) mn.getContent());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<MailMessage> waitForMail(int count, long timeout) {
@@ -32,19 +45,6 @@ public class MailHelper {
             }
         }
         throw new Error("No Email :(");
-    }
-
-    public static MailMessage toModelMail(WiserMessage m) {
-        try {
-            MimeMessage mn = m.getMimeMessage();
-            return new MailMessage(mn.getAllRecipients()[0].toString(), (String) mn.getContent());
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public void start() {
