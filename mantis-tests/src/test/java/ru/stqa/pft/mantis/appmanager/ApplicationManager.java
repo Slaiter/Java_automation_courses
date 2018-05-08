@@ -105,7 +105,7 @@ public class ApplicationManager {
         return jamesHelper;
     }
 
-    public SoapHelper soap()  {
+    public SoapHelper soap() {
         if (soapHelper == null) {
             soapHelper = new SoapHelper(this);
         }
