@@ -22,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestBase {
 
-    protected static final ApplicationManager app
+    public static final ApplicationManager app
             = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
@@ -46,7 +46,7 @@ public class TestBase {
         logger.info("Stop, test " + m.getName());
     }
 
-    public void VerifyGroupListInUi() {
+    public void verifyGroupListInUi() {
         if (Boolean.getBoolean("verifyUI")) {
             Groups dbGroups = app.db().groups();
             Groups uiGroups = app.group().all();
@@ -56,7 +56,7 @@ public class TestBase {
         }
     }
 
-    public void VerifyContactListInUi() {
+    public void verifyContactListInUi() {
         if (Boolean.getBoolean("verifyUI")) {
             Contacts dbContacts = app.db().contacts();
             Contacts uiContacts = app.contact().all();

@@ -7,8 +7,12 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
+
+import static ru.stqa.pft.addressbook.tests.TestBase.app;
 
 public class ContactHelper extends HelperBase {
 
@@ -86,6 +90,43 @@ public class ContactHelper extends HelperBase {
         selectContactById(deletedContact.getId());
         deleteContact();
         closeAlert();
+    }
+
+    public GroupData getGroupToAddition(Groups groups, ContactData contact) {
+        Groups beforeAdditionGroups = contact.getGroups();
+        for (GroupData group : groups) {
+            if (!beforeAdditionGroups.contains(group)) {
+                return group;
+            }
+        }
+        return null;
+    }
+
+    public void addition(ContactData contact, GroupData group) {
+        app.goTo().gotoHomePage();
+        selectContactById(contact.getId());
+        addContactToGroup(group);
+        app.goTo().gotoHomePage();
+    }
+
+
+    public void deleteFromGroup(ContactData contact, GroupData group) {
+        app.goTo().gotoHomePage();
+        SelectedGroupById(String.valueOf(group.getId()));
+        selectContactById(contact.getId());
+        click(By.name("remove"));
+        app.goTo().gotoHomePage();
+        SelectedGroupById("");
+        app.goTo().gotoHomePage();
+    }
+
+    private void SelectedGroupById(String id) {
+        new Select(wd.findElement(By.name("group"))).selectByValue(id);
+    }
+
+    private void addContactToGroup(GroupData group) {
+        new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(group.getId()));
+        click(By.xpath("//div[@id='content']/form[2]/div[4]/input"));
     }
 
     public boolean isThereAContact() {

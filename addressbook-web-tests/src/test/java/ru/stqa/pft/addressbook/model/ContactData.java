@@ -232,4 +232,9 @@ public class ContactData {
         groups.add(group);
         return this;
     }
+
+    public ContactData without(GroupData testGroup) {
+        groups.add(testGroup);
+        return this;
+    }
 }
