@@ -9,6 +9,7 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DeletionContactFromGroup extends TestBase {
@@ -25,7 +26,6 @@ public class DeletionContactFromGroup extends TestBase {
         if (allGroups.size() == 0) {
             GroupData newGroup = new GroupData().withName(RandomStringUtils.randomAlphabetic(10));
             app.goTo().groupPage();
-            ;
             app.group().create(newGroup);
             allGroups = app.db().groups();
         }
@@ -53,16 +53,15 @@ public class DeletionContactFromGroup extends TestBase {
         }
         Groups groupsWithContact = contactData.getGroups();
         groupData = groupsWithContact.stream().iterator().next();
-
     }
 
     @Test
     public void testDeletionContactFromGroup() {
-        ContactData before = app.db().contacts().stream().filter((c) -> (c.getId() == contactData.getId())).iterator().next();
+        GroupData before = app.db().groups().stream().filter((c) -> (c.getId() == groupData.getId())).iterator().next();
         app.contact().deleteFromGroup(contactData, groupData);
-        ContactData after = app.db().contacts().stream().filter((c) -> (c.getId() == contactData.getId())).iterator().next();
+        GroupData after = app.db().groups().stream().filter((c) -> (c.getId() == groupData.getId())).iterator().next();
         System.out.println("before: " + before);
         System.out.println("after: " + after);
-        assertThat(before, CoreMatchers.equalTo(after.without(groupData)));
+        assertThat(before, equalTo(after.without(app.db().contactById(contactData.getId()))));
     }
 }

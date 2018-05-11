@@ -108,4 +108,10 @@ public class GroupData {
                 ", footer='" + footer + '\'' +
                 '}';
     }
+
+    public Contacts without(Contacts contact) {
+        Contacts contacts = new Contacts();
+        contacts.remove(contact);
+        return contacts;
+    }
 }
